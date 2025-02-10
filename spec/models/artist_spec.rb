@@ -5,4 +5,9 @@ RSpec.describe Artist, type: :model do
     it { is_expected.to have_db_column(:name) }
     it { is_expected.to have_db_column(:country) }
   end
+
+  context 'Associations' do
+    it { is_expected.to have_many(:artist_songs) }
+    it { is_expected.to have_many(:songs).through(:artist_songs) }
+  end
 end
