@@ -38,6 +38,7 @@ gem "image_processing", "~> 1.2"
 
 gem 'devise', '~> 4.9', '>= 4.9.4'
 gem 'devise_token_auth', '~> 1.2', '>= 1.2.4'
+gem 'active_model_serializers', '~> 0.10.15'
 
 group :development, :test do
   gem 'factory_bot_rails', '~> 6.3'
