@@ -1,4 +1,13 @@
 class Internal::Admin::ArtistsController < ApplicationController
+
+  def index
+    artists = Artist.all
+
+    render json: artists,
+           each_serializer: Internal::Admin::Artists::Index::ArtistsSerializer,
+           status: :ok
+  end
+
   def create
     artist = Artist.create!(artist_params)
 

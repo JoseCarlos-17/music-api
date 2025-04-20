@@ -1,6 +1,24 @@
 require 'rails_helper'
 
 RSpec.describe "Internal::Admin::Artists", type: :request do
+  describe 'GET#index' do
+    context 'when artists are listed' do
+      let!(:artist_list) { create_list(:artist, 2) }
+
+      before do
+        get '/internal/admin/artists'
+      end
+
+      it 'must render 200 status code' do
+        expect(response).to have_http_status(:ok)
+      end
+
+      it 'must return the first artist attributes' do
+        expect(json_body[0]).to include(:id, :name, :country)
+      end
+    end
+  end
+
   describe "POST#create" do
     context 'when a artist is created by an admin' do
       let(:artist_params) { attributes_for(:artist, name: 'John Doe',
