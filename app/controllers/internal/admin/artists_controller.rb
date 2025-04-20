@@ -15,6 +15,14 @@ class Internal::Admin::ArtistsController < ApplicationController
     head :no_content
   end
 
+  def show
+    artist = Artist.find(params[:id])
+
+    render json: artist,
+           serializer: Internal::Admin::Artists::Show::ArtistsSerializer,
+           status: :ok
+  end
+
   private
 
   def artist_params
