@@ -32,7 +32,7 @@ RSpec.describe "Internal::Admin::Artists", type: :request do
         expect(response).to have_http_status(:unprocessable_entity)
       end
 
-      it 'must return message errors' do
+      it 'must return invalid attributes errors' do
         expect(json_body).to include(:errors)
       end
     end
@@ -54,6 +54,40 @@ RSpec.describe "Internal::Admin::Artists", type: :request do
 
       it 'the artist name need to change for Jake Doe' do
         expect(Artist.first.name).to eq('Jake Doe')
+      end
+    end
+  end
+
+  describe 'GET#show' do
+    context 'when an admin select an artist of list' do
+      let!(:artist) { create(:artist) }
+
+      before do
+        get "/internal/admin/artists/#{artist.id}"
+      end
+
+      it 'must render 200 status code' do
+        expect(response).to have_http_status(:ok)
+      end
+
+      it 'must return selected artist attributes' do
+        expect(json_body).to include(:id, :name, :country)
+      end
+    end
+
+    context 'when an admin select an artist of list' do
+      let!(:artist) { create(:artist) }
+
+      before do
+        get "/internal/admin/artists/#{artist.id + 1}"
+      end
+
+      it 'must render 404 status code' do
+        expect(response).to have_http_status(:not_found)
+      end
+
+      it 'must not found error' do
+        expect(json_body).to include(:errors)
       end
     end
   end
