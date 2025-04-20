@@ -23,6 +23,14 @@ class Internal::Admin::ArtistsController < ApplicationController
            status: :ok
   end
 
+  def destroy
+    artist = Artist.find(params[:id])
+
+    artist.destroy!
+
+    head :no_content
+  end
+
   private
 
   def artist_params

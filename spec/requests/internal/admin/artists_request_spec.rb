@@ -91,4 +91,38 @@ RSpec.describe "Internal::Admin::Artists", type: :request do
       end
     end
   end
+
+  describe 'DELETE#Destroy' do
+    context 'when an admin delete an artist' do
+      let!(:artist) { create(:artist) }
+
+      before do
+        delete "/internal/admin/artists/#{artist.id}"
+      end
+
+      it 'must return 204 status code' do
+        expect(response).to have_http_status(:no_content)
+      end
+
+      it 'artist must to be deleted' do
+        expect(Artist.count).to eq(0)
+      end
+    end
+
+    context 'when an admin pass the id from an artist excluded' do
+      let!(:artist) { create(:artist) }
+
+      before do
+        delete "/internal/admin/artists/#{artist.id + 1}"
+      end
+
+      it 'must render 404 status code' do
+        expect(response).to have_http_status(:not_found)
+      end
+
+      it 'must not found error' do
+        expect(json_body).to include(:errors)
+      end
+    end
+  end
 end
