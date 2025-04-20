@@ -6,7 +6,7 @@ Rails.application.routes.draw do
 
   namespace :internal do
     namespace :admin do
-      resources :artists, only: [:create]
+      resources :artists, only: [:create, :update]
     end
   end
  

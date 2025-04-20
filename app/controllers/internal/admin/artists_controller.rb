@@ -7,6 +7,14 @@ class Internal::Admin::ArtistsController < ApplicationController
            status: :created
   end
 
+  def update
+    artist = Artist.find(params[:id])
+
+    artist.update(artist_params)
+
+    head :no_content
+  end
+
   private
 
   def artist_params

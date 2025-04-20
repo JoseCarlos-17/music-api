@@ -37,4 +37,24 @@ RSpec.describe "Internal::Admin::Artists", type: :request do
       end
     end
   end
+
+  describe 'PUT#update' do
+    context 'when admin updates the artist' do
+      let!(:artist) { create(:artist, name: 'John Doe') }
+      let(:artist_params) { attributes_for(:artist, name: 'Jake Doe') }
+
+      before do
+        put "/internal/admin/artists/#{artist.id}",
+        params: { artist: artist_params }
+      end
+
+      it 'must to return 204 status code' do
+        expect(response).to have_http_status(:no_content)
+      end
+
+      it 'the artist name need to change for Jake Doe' do
+        expect(Artist.first.name).to eq('Jake Doe')
+      end
+    end
+  end
 end
