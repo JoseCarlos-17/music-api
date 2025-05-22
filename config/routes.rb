@@ -6,7 +6,8 @@ Rails.application.routes.draw do
 
   namespace :internal do
     namespace :admin do
-      resources :artists, only: [:create, :update, :show, :destroy, :index]
+      resources :artists
+      resources :songs
     end
   end
  
