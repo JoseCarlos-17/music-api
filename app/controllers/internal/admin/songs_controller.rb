@@ -7,6 +7,14 @@ class Internal::Admin::SongsController < ApplicationController
            status: :created
   end
 
+  def update
+    song = Song.find(params[:id])
+
+    song.update(song_attributes)
+
+    head :no_content
+  end
+
   private
 
   def song_attributes

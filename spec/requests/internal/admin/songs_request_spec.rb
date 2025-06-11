@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe "Internal::Admin::Songs", type: :request do
-  describe "POST#create" do
+  describe 'POST#create' do
     context 'when the admin register the song' do
       let(:song_attributes) { attributes_for(:song,  title: 'Oitavo Andar',
         duration: '00:02:00', release_date: '2016-03-01') }
@@ -29,6 +29,27 @@ RSpec.describe "Internal::Admin::Songs", type: :request do
   
       it 'must return 422 unprocessable_entity status code' do
         expect(response).to have_http_status(:unprocessable_entity)
+      end
+    end
+  end
+
+  describe 'PUT#update' do
+    context 'when a song is updated by admin' do
+      let!(:song) { create(:song) }
+      let(:song_params) { attributes_for(:song, title: 'Oitavo Andar',
+        duration: '00:02:00', release_date: '2016-03-01') }
+
+      before do
+        put "/internal/admin/songs/#{song.id}",
+        params: { song: song_params }
+      end
+
+      it 'must return 204 status code' do
+        expect(response).to have_http_status(:no_content)
+      end
+
+      it 'must update the song attributes' do
+        expect(Song.last.title).to eq('Oitavo Andar')
       end
     end
   end
