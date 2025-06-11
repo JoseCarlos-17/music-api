@@ -53,4 +53,22 @@ RSpec.describe "Internal::Admin::Songs", type: :request do
       end
     end
   end
+
+  describe 'GET#show' do
+    context 'when a song is selected' do
+      let(:song) { create(:song) }
+
+      before do
+        get "/internal/admin/songs/#{song.id}"
+      end
+
+      it 'must to return 200 status code' do
+        expect(response).to have_http_status(:ok)
+      end
+
+      it 'must return song attributes' do
+        expect(json_body).to include(:id, :title, :duration, :release_date)
+      end
+    end
+  end
 end

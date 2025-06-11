@@ -15,6 +15,14 @@ class Internal::Admin::SongsController < ApplicationController
     head :no_content
   end
 
+  def show
+    song = Song.find(params[:id])
+
+    render json: song,
+           serializer: Internal::Admin::Songs::Show::SongsSerializer,
+           status: :ok
+  end
+
   private
 
   def song_attributes
