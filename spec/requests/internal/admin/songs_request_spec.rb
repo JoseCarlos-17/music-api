@@ -71,4 +71,22 @@ RSpec.describe "Internal::Admin::Songs", type: :request do
       end
     end
   end
+
+  describe 'DELETE#destroy' do
+    context 'when a song is deleted' do
+      let!(:song) { create(:song) }
+
+      before do
+        delete "/internal/admin/songs/#{song.id}"
+      end
+
+      it 'must return 204 status code' do
+        expect(response).to have_http_status(:no_content)
+      end
+
+      it 'must delete the song above' do
+        expect(Song.all.count).to eq(0)
+      end
+    end
+  end
 end

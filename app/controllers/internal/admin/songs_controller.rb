@@ -23,6 +23,14 @@ class Internal::Admin::SongsController < ApplicationController
            status: :ok
   end
 
+  def destroy
+    song = Song.find(params[:id])
+
+    song.destroy!
+
+    head :no_content
+  end
+
   private
 
   def song_attributes
