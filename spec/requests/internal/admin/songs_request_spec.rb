@@ -1,6 +1,24 @@
 require 'rails_helper'
 
 RSpec.describe "Internal::Admin::Songs", type: :request do
+  describe 'GET#index' do
+    context 'when songs are listed' do
+      let!(:songs) { create_list(:song, 2) }
+
+      before do
+        get '/internal/admin/songs'
+      end
+
+      it 'must return 200 status code' do
+        expect(response).to have_http_status(:ok)
+      end
+
+      it 'must return the first song attributes' do
+        expect(json_body[0]).to include(:id, :title, :duration, :release_date)
+      end
+    end
+  end
+
   describe 'POST#create' do
     context 'when the admin register the song' do
       let(:song_attributes) { attributes_for(:song,  title: 'Oitavo Andar',

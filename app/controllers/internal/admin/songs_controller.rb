@@ -1,4 +1,13 @@
 class Internal::Admin::SongsController < ApplicationController
+  
+  def index
+    songs = Song.all
+
+    render json: songs,
+           each_serializer: Internal::Admin::Songs::Index::SongsSerializer,
+           status: :ok
+  end
+  
   def create
     song = Song.create!(song_attributes)
 
