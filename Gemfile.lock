@@ -262,6 +262,7 @@ PLATFORMS
 
 DEPENDENCIES
   active_model_serializers (~> 0.10.15)
+  activestorage (~> 7.1, >= 7.1.5)
   bootsnap
   debug
   devise (~> 4.9, >= 4.9.4)
