@@ -1,5 +1,4 @@
 class Internal::Admin::ArtistsController < ApplicationController
-
   def index
     artists = Artist.all
 
@@ -43,6 +42,6 @@ class Internal::Admin::ArtistsController < ApplicationController
   private
 
   def artist_params
-    params.require(:artist).permit(:name, :country)
+    params.require(:artist).permit(:name, :country, :profile_photo)
   end
 end

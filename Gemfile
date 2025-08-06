@@ -34,6 +34,8 @@ gem "bootsnap", require: false
 gem "image_processing", "~> 1.2"
 gem 'activestorage', '~> 7.1', '>= 7.1.5'
 
+gem 'dotenv-rails', '~> 2.1', '>= 2.1.1'
+
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin Ajax possible
 # gem "rack-cors"
 
