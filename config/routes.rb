@@ -1,8 +1,7 @@
 Rails.application.routes.draw do
-  mount_devise_token_auth_for 'User', at: 'auth', controllers: {
-    registrations: 'auth/registrations',
-    sessions: 'auth/sessions'
-  }
+  mount_devise_token_auth_for 'User', at: 'user'
+
+  resources :users, only: %i[create]
 
   namespace :internal do
     namespace :admin do
