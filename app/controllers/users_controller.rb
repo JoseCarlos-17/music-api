@@ -1,14 +1,26 @@
 class UsersController < ApplicationController
+  before_action :authenticate_user!, only: [:show]
+ 
   def create
     user = User.create!(user_params)
     
-    render json: user, serializer: UserSerializer, status: :created
+    render json: user,
+           serializer: Users::Create::UserSerializer,
+           status: :created
+  end
+
+  def show
+    user = current_user
+
+    render json: user,
+           serializer: Users::Create::UserSerializer,
+           status: :ok
   end
 
   private
 
   def user_params
-    params.require(:user).permit(:name, :email, :image,
-                                 :password, :password_confirmation)
+    params.require(:user).permit(:name, :email, :image, :password,
+                                 :password_confirmation)
   end
 end
