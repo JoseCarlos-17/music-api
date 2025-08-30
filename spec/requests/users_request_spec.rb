@@ -39,4 +39,22 @@ RSpec.describe "Users", type: :request do
       end
     end
   end
+
+  describe "GET#show" do
+    context 'when a user see your details' do
+      let(:user) { create(:user) }
+
+      before do
+        get "/users/#{user.id}", headers: user_headers(user)
+      end
+
+      it 'must return 200 ok' do
+        expect(response).to have_http_status(:ok)
+      end
+
+      it 'must return user attributes' do
+        expect(json_body).to include(:name, :email)
+      end
+    end
+  end
 end

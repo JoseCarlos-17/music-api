@@ -27,6 +27,10 @@ module MusicApi
     # Only loads a smaller set of middleware suitable for API only apps.
     # Middleware like session, flash, cookies can be added back manually.
     # Skip views, helpers and assets when generating a new resource.
+        # config/application.rb or config/initializers/session_store.rb
+    Rails.application.config.session_store :cookie_store, key: '_your_app_session'
+    Rails.application.config.middleware.use ActionDispatch::Cookies
+    Rails.application.config.middleware.use Rails.application.config.session_store, Rails.application.config.session_options
     config.api_only = true
   end
 end
