@@ -3,7 +3,7 @@
 class Auth::SessionsController < DeviseTokenAuth::SessionsController
   before_action :configure_sign_in_params
 
-  protected
+  # protected
 
   def configure_sign_in_params
     devise_parameter_sanitizer.permit(:sign_in, keys: [:email, :password])
