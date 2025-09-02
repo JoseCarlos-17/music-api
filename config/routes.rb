@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   mount_devise_token_auth_for 'User', at: 'user'
 
-  resources :users, only: %i[create show]
+  resources :users, only: %i[create show update]
 
   namespace :internal do
     namespace :admin do
