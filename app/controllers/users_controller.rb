@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :authenticate_user!, only: [:show]
+  before_action :authenticate_user!, only: [:show, :update]
  
   def create
     user = User.create!(user_params)
@@ -15,6 +15,14 @@ class UsersController < ApplicationController
     render json: user,
            serializer: Users::Create::UserSerializer,
            status: :ok
+  end
+
+  def update
+    user = current_user
+
+    user.update(user_params)
+
+    head :no_content
   end
 
   private

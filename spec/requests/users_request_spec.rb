@@ -57,4 +57,23 @@ RSpec.describe "Users", type: :request do
       end
     end
   end
+
+  describe 'PUT#update' do
+    context 'when a user see your details' do
+      let(:user) { create(:user) }
+      let(:user_params) { attributes_for(:user, name: "John doe",
+        email: "johndoe@gmail.com", password: "123123123",
+        password_confirmation: "123123123") }
+
+      before do
+        put "/users/#{user.id}",
+        params: { user: user_params },
+        headers: user_headers(user)
+      end
+
+      it 'must return 204 status code' do
+        expect(response).to have_http_status(:no_content)
+      end
+    end
+  end
 end
