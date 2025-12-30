@@ -21,7 +21,6 @@ RSpec.describe "Internal::Admin::Artists", type: :request do
 
   describe "POST#create" do
     context 'when a artist is created by an admin' do
-      
       let(:photo) { fixture_file_upload('app/assets/cover.png', 'image/jpeg') }
       let(:artist_params) { attributes_for(:artist, name: 'John Doe',
         country: 'United States', profile_photo: photo) }
