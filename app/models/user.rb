@@ -9,5 +9,12 @@ class User < ActiveRecord::Base
          :rememberable,
          :validatable
 
+  include Rails.application.routes.url_helpers
   include DeviseTokenAuth::Concerns::User
+
+  has_one_attached :profile_photo
+
+  def profile_photo_url
+    "#{ENV['BASE_URL']}#{rails_blob_path(self.profile_photo, only_path: true)}" if self.profile_photo.attached?
+  end
 end
