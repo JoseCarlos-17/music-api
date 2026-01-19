@@ -10,6 +10,7 @@ RSpec.describe "Users", type: :request do
 
       before do
         post '/users', params: { user: user_params }
+        binding.pry
       end
 
       it 'must return status 201 status code' do
