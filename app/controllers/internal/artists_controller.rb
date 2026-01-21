@@ -1,9 +1,9 @@
-class Internal::Admin::ArtistsController < ApplicationController
+class Internal::ArtistsController < ApplicationController
   def index
     artists = Artist.all
 
     render json: artists,
-           each_serializer: Internal::Admin::Artists::Index::ArtistsSerializer,
+           each_serializer: Internal::Artists::Index::ArtistsSerializer,
            status: :ok
   end
 
@@ -11,7 +11,7 @@ class Internal::Admin::ArtistsController < ApplicationController
     artist = Artist.create!(artist_params)
 
     render json: artist,
-           serializer: Internal::Admin::Artists::Create::ArtistsSerializer,
+           serializer: Internal::Artists::Create::ArtistsSerializer,
            status: :created
   end
 
@@ -27,7 +27,7 @@ class Internal::Admin::ArtistsController < ApplicationController
     artist = Artist.find(params[:id])
 
     render json: artist,
-           serializer: Internal::Admin::Artists::Show::ArtistsSerializer,
+           serializer: Internal::Artists::Show::ArtistsSerializer,
            status: :ok
   end
 

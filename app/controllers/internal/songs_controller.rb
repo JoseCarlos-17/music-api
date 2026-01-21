@@ -1,9 +1,9 @@
-class Internal::Admin::SongsController < ApplicationController
+class Internal::SongsController < ApplicationController
   def index
     songs = Song.all
 
     render json: songs,
-           each_serializer: Internal::Admin::Songs::Index::SongsSerializer,
+           each_serializer: Internal::Songs::Index::SongsSerializer,
            status: :ok
   end
   
@@ -11,7 +11,7 @@ class Internal::Admin::SongsController < ApplicationController
     song = Song.create!(song_attributes)
 
     render json: song,
-           serializer: Internal::Admin::Songs::Create::SongsSerializer,
+           serializer: Internal::Songs::Create::SongsSerializer,
            status: :created
   end
 
@@ -27,7 +27,7 @@ class Internal::Admin::SongsController < ApplicationController
     song = Song.find(params[:id])
 
     render json: song,
-           serializer: Internal::Admin::Songs::Show::SongsSerializer,
+           serializer: Internal::Songs::Show::SongsSerializer,
            status: :ok
   end
 
