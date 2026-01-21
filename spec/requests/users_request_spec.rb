@@ -10,7 +10,6 @@ RSpec.describe "Users", type: :request do
 
       before do
         post '/users', params: { user: user_params }
-        binding.pry
       end
 
       it 'must return status 201 status code' do
@@ -19,7 +18,8 @@ RSpec.describe "Users", type: :request do
 
       it 'must return user attributes' do
         expect(json_body).to include(:name, :email, :password,
-                                     :password_confirmation, :profile_photo)
+                                     :password_confirmation, :profile_photo,
+                                     :role)
       end
     end
 
@@ -55,7 +55,7 @@ RSpec.describe "Users", type: :request do
       end
 
       it 'must return user attributes' do
-        expect(json_body).to include(:name, :email, :profile_photo)
+        expect(json_body).to include(:name, :email, :profile_photo, :role)
       end
     end
   end

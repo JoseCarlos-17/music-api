@@ -1,4 +1,4 @@
-class Internal::Admin::Artists::Create::ArtistsSerializer < ActiveModel::Serializer
+class Internal::Artists::Index::ArtistsSerializer < ActiveModel::Serializer
   attributes :id, :name, :country, :profile_photo
 
   def profile_photo

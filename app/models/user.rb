@@ -17,6 +17,8 @@ class User < ActiveRecord::Base
   enum :role, { user:0, admin:1 }
 
   def profile_photo_url
-    "#{ENV['BASE_URL']}#{rails_blob_path(self.profile_photo, only_path: true)}" if self.profile_photo.attached?
+    if self.profile_photo.attached?
+      "#{ENV['BASE_URL']}#{rails_blob_path(self.profile_photo, only_path: true)}"
+    end
   end
 end

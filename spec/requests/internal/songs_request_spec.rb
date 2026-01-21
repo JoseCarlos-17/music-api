@@ -1,12 +1,12 @@
 require 'rails_helper'
 
-RSpec.describe "Internal::Admin::Songs", type: :request do
+RSpec.describe "Internal::Songs", type: :request do
   describe 'GET#index' do
     context 'when songs are listed' do
       let!(:songs) { create_list(:song, 2) }
 
       before do
-        get '/internal/admin/songs'
+        get '/internal/songs'
       end
 
       it 'must return 200 status code' do
@@ -25,7 +25,7 @@ RSpec.describe "Internal::Admin::Songs", type: :request do
         duration: '00:02:00', release_date: '2016-03-01') }
       
       before do
-        post '/internal/admin/songs', params: { song: song_attributes }
+        post '/internal/songs', params: { song: song_attributes }
       end
 
       it 'must return 201 created status code' do
@@ -42,7 +42,7 @@ RSpec.describe "Internal::Admin::Songs", type: :request do
         duration: nil, release_date: nil) }
 
       before do
-        post '/internal/admin/songs', params: { song: song_invalid_attributes }
+        post '/internal/songs', params: { song: song_invalid_attributes }
       end
   
       it 'must return 422 unprocessable_entity status code' do
@@ -58,7 +58,7 @@ RSpec.describe "Internal::Admin::Songs", type: :request do
         duration: '00:02:00', release_date: '2016-03-01') }
 
       before do
-        put "/internal/admin/songs/#{song.id}",
+        put "/internal/songs/#{song.id}",
         params: { song: song_params }
       end
 
@@ -77,7 +77,7 @@ RSpec.describe "Internal::Admin::Songs", type: :request do
       let(:song) { create(:song) }
 
       before do
-        get "/internal/admin/songs/#{song.id}"
+        get "/internal/songs/#{song.id}"
       end
 
       it 'must to return 200 status code' do
@@ -95,7 +95,7 @@ RSpec.describe "Internal::Admin::Songs", type: :request do
       let!(:song) { create(:song) }
 
       before do
-        delete "/internal/admin/songs/#{song.id}"
+        delete "/internal/songs/#{song.id}"
       end
 
       it 'must return 204 status code' do

@@ -1,12 +1,12 @@
 require 'rails_helper'
 
-RSpec.describe "Internal::Admin::Artists", type: :request do
+RSpec.describe "Internal::Artists", type: :request do
   describe 'GET#index' do
     context 'when artists are listed' do
       let!(:artist_list) { create_list(:artist, 2) }
 
       before do
-        get '/internal/admin/artists'
+        get '/internal/artists'
       end
 
       it 'must render 200 status code' do
@@ -25,7 +25,7 @@ RSpec.describe "Internal::Admin::Artists", type: :request do
       let(:artist_params) { attributes_for(:artist, name: 'John Doe',
         country: 'United States', profile_photo: photo) }
       before do
-        post '/internal/admin/artists', params: { artist: artist_params }
+        post '/internal/artists', params: { artist: artist_params }
       end
 
       it 'status code must to be 201 created' do
@@ -42,7 +42,7 @@ RSpec.describe "Internal::Admin::Artists", type: :request do
       country: nil) }
 
       before do
-        post '/internal/admin/artists',
+        post '/internal/artists',
         params: { artist: invalid_artist_params }
       end
 
@@ -62,7 +62,7 @@ RSpec.describe "Internal::Admin::Artists", type: :request do
       let(:artist_params) { attributes_for(:artist, name: 'Jake Doe') }
 
       before do
-        put "/internal/admin/artists/#{artist.id}",
+        put "/internal/artists/#{artist.id}",
         params: { artist: artist_params }
       end
 
@@ -81,7 +81,7 @@ RSpec.describe "Internal::Admin::Artists", type: :request do
       let!(:artist) { create(:artist) }
 
       before do
-        get "/internal/admin/artists/#{artist.id}"
+        get "/internal/artists/#{artist.id}"
       end
 
       it 'must render 200 status code' do
@@ -97,7 +97,7 @@ RSpec.describe "Internal::Admin::Artists", type: :request do
       let!(:artist) { create(:artist) }
 
       before do
-        get "/internal/admin/artists/#{artist.id + 1}"
+        get "/internal/artists/#{artist.id + 1}"
       end
 
       it 'must render 404 status code' do
@@ -115,7 +115,7 @@ RSpec.describe "Internal::Admin::Artists", type: :request do
       let!(:artist) { create(:artist) }
 
       before do
-        delete "/internal/admin/artists/#{artist.id}"
+        delete "/internal/artists/#{artist.id}"
       end
 
       it 'must return 204 status code' do
@@ -131,7 +131,7 @@ RSpec.describe "Internal::Admin::Artists", type: :request do
       let!(:artist) { create(:artist) }
 
       before do
-        delete "/internal/admin/artists/#{artist.id + 1}"
+        delete "/internal/artists/#{artist.id + 1}"
       end
 
       it 'must render 404 status code' do
