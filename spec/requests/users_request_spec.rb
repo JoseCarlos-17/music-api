@@ -1,9 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe "Users", type: :request do
+  let(:photo) { fixture_file_upload('app/assets/cover.png', 'file/png') }
+
   describe "POST#create" do
     context 'when the user is registered' do
-      let(:photo) { fixture_file_upload('app/assets/cover.png', 'image/jpeg') }
       let(:user_params) { attributes_for(:user, name: "John doe",
         email: "johndoe@gmail.com", password: "123123123",
         password_confirmation: "123123123", profile_photo: photo) }
@@ -44,7 +45,7 @@ RSpec.describe "Users", type: :request do
 
   describe "GET#show" do
     context 'when a user see your details' do
-      let!(:user) { create(:user) }
+      let!(:user) { create(:user, profile_photo: photo) }
 
       before do
         get "/users/#{user.id}", headers: user_headers(user)
@@ -62,7 +63,7 @@ RSpec.describe "Users", type: :request do
 
   describe 'PUT#update' do
     context 'when a user see your details' do
-      let!(:user) { create(:user) }
+      let!(:user) { create(:user, profile_photo: photo) }
       let(:user_params) { attributes_for(:user, name: "John doe",
         email: "johndoe@gmail.com", password: "123123123",
         password_confirmation: "123123123") }

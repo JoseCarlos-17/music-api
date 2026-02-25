@@ -7,9 +7,10 @@
 default: &default
   adapter: postgresql
   encoding: unicode
-  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  url: <%= ENV['DATABASE_URL'] %>
   username: <%= ENV['POSTGRES_USERNAME'] %>
   password: <%= ENV['POSTGRES_PASSWORD'] %>
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
 development:
   <<: *default
@@ -25,3 +26,5 @@ test:
 production:
   <<: *default
   database: music_api_production
+
+  # internal database url: postgresql://postgresql:Fyxx4rvSaGgMwWaUi0TERbKtDVK9XPfo@dpg-d6f4qqpr0fns73f39fm0-a/music_api_production

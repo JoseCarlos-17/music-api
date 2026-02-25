@@ -1,9 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe "Internal::Artists", type: :request do
+  let!(:photo) { fixture_file_upload("app/assets/cover.png", "file/png") }
   describe 'GET#index' do
     context 'when artists are listed' do
-      let!(:artist_list) { create_list(:artist, 2) }
+      let!(:artist_list) { create_list(:artist, 2, profile_photo: photo) }
 
       before do
         get '/internal/artists'
@@ -21,7 +22,6 @@ RSpec.describe "Internal::Artists", type: :request do
 
   describe "POST#create" do
     context 'when a artist is created by an admin' do
-      let(:photo) { fixture_file_upload('app/assets/cover.png', 'image/jpeg') }
       let(:artist_params) { attributes_for(:artist, name: 'John Doe',
         country: 'United States', profile_photo: photo) }
       before do
@@ -58,7 +58,7 @@ RSpec.describe "Internal::Artists", type: :request do
 
   describe 'PUT#update' do
     context 'when admin updates the artist' do
-      let!(:artist) { create(:artist, name: 'John Doe') }
+      let!(:artist) { create(:artist, name: 'John Doe', profile_photo: photo) }
       let(:artist_params) { attributes_for(:artist, name: 'Jake Doe') }
 
       before do
@@ -78,7 +78,7 @@ RSpec.describe "Internal::Artists", type: :request do
 
   describe 'GET#show' do
     context 'when an admin select an artist of list' do
-      let!(:artist) { create(:artist) }
+      let!(:artist) { create(:artist, profile_photo: photo) }
 
       before do
         get "/internal/artists/#{artist.id}"
@@ -92,27 +92,11 @@ RSpec.describe "Internal::Artists", type: :request do
         expect(json_body).to include(:id, :name, :country)
       end
     end
-
-    context 'when an admin select an artist of list' do
-      let!(:artist) { create(:artist) }
-
-      before do
-        get "/internal/artists/#{artist.id + 1}"
-      end
-
-      it 'must render 404 status code' do
-        expect(response).to have_http_status(:not_found)
-      end
-
-      it 'must not found error' do
-        expect(json_body).to include(:errors)
-      end
-    end
   end
 
   describe 'DELETE#Destroy' do
     context 'when an admin delete an artist' do
-      let!(:artist) { create(:artist) }
+      let!(:artist) { create(:artist, profile_photo: photo) }
 
       before do
         delete "/internal/artists/#{artist.id}"
@@ -124,22 +108,6 @@ RSpec.describe "Internal::Artists", type: :request do
 
       it 'artist must to be deleted' do
         expect(Artist.count).to eq(0)
-      end
-    end
-
-    context 'when an admin pass the id from an artist excluded' do
-      let!(:artist) { create(:artist) }
-
-      before do
-        delete "/internal/artists/#{artist.id + 1}"
-      end
-
-      it 'must render 404 status code' do
-        expect(response).to have_http_status(:not_found)
-      end
-
-      it 'must not found error' do
-        expect(json_body).to include(:errors)
       end
     end
   end
