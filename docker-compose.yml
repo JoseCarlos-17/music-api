@@ -1,0 +1,24 @@
+services:
+  db:
+    image: 'postgres:17.5'
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: "music_api_development"
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+  rails:
+    build: .
+    ports:
+      - '3000:3000'
+    environment:
+      RAILS_ENV: development
+    volumes:
+      - .:/docker/app
+    env_file:
+      - .env
+    depends_on:
+      - db
+
+volumes:
+  postgres:
