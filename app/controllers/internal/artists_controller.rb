@@ -1,6 +1,6 @@
 class Internal::ArtistsController < ApplicationController
   def index
-    artists = Artist.all
+    artists = Artist.includes(:songs)
 
     render json: artists,
            each_serializer: Internal::Artists::Index::ArtistsSerializer,

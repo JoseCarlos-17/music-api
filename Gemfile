@@ -7,9 +7,15 @@ gem "rails", "~> 7.1.5", ">= 7.1.5.1"
 # Use sqlite3 as the database for Active Record
 # gem "sqlite3", ">= 1.4"
 gem 'pg', '~> 1.3'
+gem 'devise', '~> 4.9', '>= 4.9.4'
+gem 'devise_token_auth', '~> 1.2', '>= 1.2.4'
+gem 'active_model_serializers', '~> 0.10.15'
+gem "puma", ">= 5.0"
+gem "image_processing", "~> 1.2"
+gem 'activestorage', '~> 7.1', '>= 7.1.5'
+gem 'dotenv-rails', '~> 2.1', '>= 2.1.1'
 
 # Use the Puma web server [https://github.com/puma/puma]
-gem "puma", ">= 5.0"
 
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 # gem "jbuilder"
@@ -30,17 +36,9 @@ gem "tzinfo-data", platforms: %i[ mswin mswin64 mingw x64_mingw jruby ]
 gem "bootsnap", require: false
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
-gem "image_processing", "~> 1.2"
-gem 'activestorage', '~> 7.1', '>= 7.1.5'
-
-gem 'dotenv-rails', '~> 2.1', '>= 2.1.1'
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin Ajax possible
 # gem "rack-cors"
-
-gem 'devise', '~> 4.9', '>= 4.9.4'
-gem 'devise_token_auth', '~> 1.2', '>= 1.2.4'
-gem 'active_model_serializers', '~> 0.10.15'
 
 group :development, :test do
   gem 'factory_bot_rails', '~> 6.3'

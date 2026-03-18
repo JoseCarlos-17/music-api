@@ -1,6 +1,7 @@
 class Internal::SongsController < ApplicationController
   def index
-    songs = Song.all
+    songs = Song.includes(:artists)
+    # songs = Song.all
 
     render json: songs,
            each_serializer: Internal::Songs::Index::SongsSerializer,
