@@ -11,12 +11,21 @@ services:
     build: .
     ports:
       - '3000:3000'
-    environment:
-      RAILS_ENV: development
     volumes:
-      - .:/docker/app
+      - .:/app
     env_file:
       - .env
+    depends_on:
+      - db
+
+  test:
+    build: .
+    volumes:
+      - .:/app
+    env_file:
+      - .env
+    environment:
+      RAILS_ENV: test
     depends_on:
       - db
 
