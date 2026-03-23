@@ -16,6 +16,9 @@ class Admin::SongsQuery
   end
 
   def by_title(list)
-    list.where('title ILIKE ?', "%#{@params[:title]}%")
+    list.where(
+      "REPLACE(LOWER(title), ' ', '') LIKE ?",
+      "#{@params[:title].to_s.strip.downcase.gsub(' ', '')}%"
+    )
   end
 end
