@@ -65,7 +65,7 @@ ActiveRecord::Schema[7.1].define(version: 2026_03_20_152915) do
     t.string "file_url"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index "replace(lower((title)::text), ' '::text, ''::text)", name: "index_to_song_title"
+    t.index ["title"], name: "index_songs_on_title", opclass: :text_pattern_ops
   end
 
   create_table "users", force: :cascade do |t|
