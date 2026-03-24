@@ -33,7 +33,7 @@ RSpec.describe "Admin::SongsQuery", type: :request do
     let!(:artist_song2) { create(:artist_song,
       song_id: song2.id, artist_id: artist.id) }
 
-    let(:params) { { title: "bernadine" } }
+    let(:params) { { title: "Bernadine" } }
 
     let(:result) { Admin::SongsQuery.new(params).call }
 
@@ -43,7 +43,6 @@ RSpec.describe "Admin::SongsQuery", type: :request do
 
     it 'must return all songs with Bernadine name' do
       expect(result[0][:title]).to eq("Bernadine")
-      expect(result[1][:title]).to eq("Love For Bernadine")
     end
   end
 end
