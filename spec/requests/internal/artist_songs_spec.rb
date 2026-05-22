@@ -1,11 +1,30 @@
 require 'rails_helper'
 
 RSpec.describe 'Internal::ArtistSongs', type: :request do
+  let!(:artist) { create(:artist) }
+  let!(:song) { create(:song) }
+
+  describe 'GET#index' do
+    context 'when artist songs are listed' do
+      let!(:artist_song_list) { create_list(:artist_song, 2,
+        artist: artist, song: song) }
+
+      before do
+        get '/internal/artist_songs'
+      end
+
+      it 'must return 200 status code' do
+        expect(response).to have_http_status(:ok)
+      end
+
+      it 'must return the first artist_song attributes' do
+        expect(json_body[0]).to include(:id, :artist, :song)
+      end
+    end
+  end
+
   describe 'POST#create' do
     context 'when an artist song is created' do
-      let!(:artist) { create(:artist) }
-      let!(:song) { create(:song) }
-
       let(:artist_song_params) { attributes_for(:artist_song,
         artist_id: artist.id, song_id: song.id) }
 
@@ -33,9 +52,6 @@ RSpec.describe 'Internal::ArtistSongs', type: :request do
     end
 
     context 'when an artist song is not created' do
-      let!(:artist) { create(:artist) }
-      let!(:song) { create(:song) }
-
       let(:artist_song_invalid_params) { attributes_for(:artist_song,
         artist_id: artist.id, song_id: nil) }
 
@@ -50,6 +66,60 @@ RSpec.describe 'Internal::ArtistSongs', type: :request do
 
       it 'must return error message' do
         expect(json_body).to have_key(:errors)
+      end
+    end
+  end
+
+  describe 'PUT#update' do
+    context 'when admin updates the artist song' do
+      let!(:other_artist) { create(:artist, name: 'Other Artist') }
+      let!(:artist_song) { create(:artist_song, artist: artist, song: song) }
+      let(:artist_song_params) { attributes_for(:artist_song,
+        artist_id: other_artist.id, song_id: song.id) }
+
+      before do
+        put "/internal/artist_songs/#{artist_song.id}",
+        params: { artist_song: artist_song_params }
+      end
+
+      it 'must return 204 status code' do
+        expect(response).to have_http_status(:no_content)
+      end
+    end
+  end
+
+  describe 'GET#show' do
+    context 'when an admin selects an artist song from the list' do
+      let!(:artist_song) { create(:artist_song, artist: artist, song: song) }
+
+      before do
+        get "/internal/artist_songs/#{artist_song.id}"
+      end
+
+      it 'must return 200 status code' do
+        expect(response).to have_http_status(:ok)
+      end
+
+      it 'must return selected artist_song attributes' do
+        expect(json_body).to include(:id, :artist, :song)
+      end
+    end
+  end
+
+  describe 'DELETE#destroy' do
+    context 'when an admin deletes an artist song' do
+      let!(:artist_song) { create(:artist_song, artist: artist, song: song) }
+
+      before do
+        delete "/internal/artist_songs/#{artist_song.id}"
+      end
+
+      it 'must return 204 status code' do
+        expect(response).to have_http_status(:no_content)
+      end
+
+      it 'artist_song must be deleted' do
+        expect(ArtistSong.count).to eq(0)
       end
     end
   end
