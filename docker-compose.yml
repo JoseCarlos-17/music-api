@@ -18,16 +18,5 @@ services:
     depends_on:
       - db
 
-  test:
-    build: .
-    volumes:
-      - .:/app
-    env_file:
-      - .env
-    environment:
-      RAILS_ENV: test
-    depends_on:
-      - db
-
 volumes:
   postgres:
