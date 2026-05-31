@@ -3,6 +3,7 @@ Rails.application.routes.draw do
 
   resources :users, only: %i[create show update destroy]
   resources :artists, only: %i[index show]
+  resources :songs, only: %i[index show]
 
   namespace :internal do
     resources :artists
