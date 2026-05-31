@@ -20,4 +20,22 @@ RSpec.describe "Artists", type: :request do
       end
     end
   end
+
+  describe 'GET#show' do
+    context 'when an artist is selected from the list' do
+      let!(:artist) { create(:artist, profile_photo: photo) }
+
+      before do
+        get "/artists/#{artist.id}"
+      end
+
+      it 'must render 200 status code' do
+        expect(response).to have_http_status(:ok)
+      end
+
+      it 'must return selected artist attributes' do
+        expect(json_body).to include(:id, :name, :country)
+      end
+    end
+  end
 end
