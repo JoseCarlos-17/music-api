@@ -1,9 +1,9 @@
-name: CI file for run tests on pull requests
+name: CI file to run rspec tests
 
 on: [pull_request]
 
 jobs:
-  tests:
+  build:
     runs-on: ubuntu-latest
 
     services: 
@@ -23,24 +23,21 @@ jobs:
         with:
           ruby-version: 3.1.2
 
-      - name: Install gems
+      - name: Install Gems
         run: |
-          sudo apt install -yqq libpq-dev
           gem install bundler -v 2.4.22
           bundle install
 
-      - name: Setup Database
+      - name: Setup database and run rspec tests
         env:
           DATABASE_URL: postgres://postgres:postgres@localhost:5432/postgre
           RAILS_ENV: test
           WITH_COVERAGE: true
           DISABLE_SPRING: 1
         run: |
+          sudo apt install -yqq libpq-dev
           bundle exec rails db:prepare
-      
-      - name: Run tests
-        run: |
-          bundle exec rspec spec 
+          bundle exec rspec spec
 
       - name: Create Coverage Artifact
         uses: actions/upload-artifact@v4
