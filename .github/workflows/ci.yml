@@ -1,14 +1,9 @@
-name: CI
+name: CI file to run rspec tests
 
-on:
-  push:
-    branches: [ '*' ]
-  pull_request:
-    branches: [ main ]
+on: [pull_request]
 
 jobs:
-  test:
-    name: Running tests
+  build:
     runs-on: ubuntu-latest
 
     services: 
@@ -22,27 +17,25 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: 3.1.2
 
-      - name: Install Dependencies
-        run: |
-          sudo apt install -yqq libpq-dev
-          gem install bundler -v 2.4.22
-
       - name: Install Gems
         run: |
+          gem install bundler -v 2.4.22
           bundle install
 
-      - name: Setup database and test with rspec
+      - name: Setup database and run rspec tests
         env:
           DATABASE_URL: postgres://postgres:postgres@localhost:5432/postgre
           RAILS_ENV: test
           WITH_COVERAGE: true
           DISABLE_SPRING: 1
         run: |
+          sudo apt install -yqq libpq-dev
           bundle exec rails db:prepare
           bundle exec rspec spec
 
